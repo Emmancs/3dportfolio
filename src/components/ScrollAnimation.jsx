@@ -81,57 +81,50 @@ export default function ScrollAnimation() {
             .normalize();
 
         /*
-          Distance between camera and screen.
-    
-          1.5 means the camera stops
-          1.5 units in front of the screen.
+          Positions for the cinematic sequence:
+          1. Viewport fill target (stops briefly to dominate the view)
+          2. Pass-through target (camera goes completely inside/through the screen)
         */
 
-        cameraTarget.current
+        const viewportFillDistance = 0.6; // Units in front of screen
+        const passThroughDistance = -0.5; // Units behind screen
+
+        const viewportFillTarget = new THREE.Vector3()
             .copy(screenPosition.current)
-            .add(
-                approachDirection.current
-                    .clone()
-                    .multiplyScalar(1.5)
+            .add(approachDirection.current.clone().multiplyScalar(viewportFillDistance));
+
+        const passThroughTarget = new THREE.Vector3()
+            .copy(screenPosition.current)
+            .add(approachDirection.current.clone().multiplyScalar(passThroughDistance));
+
+        /*
+          Animation phases:
+          Phase 1 (0.30 - 0.70): Camera moves from start to viewportFillTarget
+          Phase 2 (0.70 - 0.90): Camera moves from viewportFillTarget to passThroughTarget
+        */
+
+        let phase1Progress = (progress - 0.3) / (0.7 - 0.3);
+        phase1Progress = THREE.MathUtils.clamp(phase1Progress, 0, 1);
+        phase1Progress = phase1Progress * phase1Progress * (3 - 2 * phase1Progress); // Smoothstep
+
+        let phase2Progress = (progress - 0.7) / (0.9 - 0.7);
+        phase2Progress = THREE.MathUtils.clamp(phase2Progress, 0, 1);
+        // phase2Progress = phase2Progress * phase2Progress * (3 - 2 * phase2Progress); // Smoothstep
+        phase2Progress = Math.pow(phase2Progress, 2); // Ease in for the final plunge
+
+        if (progress <= 0.7) {
+            camera.position.lerpVectors(
+                initialCameraPosition.current,
+                viewportFillTarget,
+                phase1Progress
             );
-
-        /*
-          Animation starts at 30%
-          and reaches the screen at 75%.
-        */
-
-        const start = 0.3;
-        const end = 0.75;
-
-        let screenProgress =
-            (progress - start) /
-            (end - start);
-
-        screenProgress = THREE.MathUtils.clamp(
-            screenProgress,
-            0,
-            1
-        );
-
-        /*
-          Smoothstep easing
-        */
-
-        screenProgress =
-            screenProgress *
-            screenProgress *
-            (3 - 2 * screenProgress);
-
-        /*
-          Move camera from initial position
-          toward the screen.
-        */
-
-        camera.position.lerpVectors(
-            initialCameraPosition.current,
-            cameraTarget.current,
-            screenProgress
-        );
+        } else {
+            camera.position.lerpVectors(
+                viewportFillTarget,
+                passThroughTarget,
+                phase2Progress
+            );
+        }
 
         /*
           Always look at the center of the screen.
