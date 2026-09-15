@@ -1,20 +1,8 @@
 
 
-export default function Hero({ progress }) {
-
-    // Fade out between 0.25 and 0.40
-    const opacity = Math.max(0, 1 - Math.max(0, (progress - 0.25) / 0.15));
-    const pointerEvents = progress < 0.40 ? "auto" : "none";
-
+export default function Hero() {
     return (
-        <section
-            className="min-h-screen flex flex-col md:flex-row justify-between items-center px-8 md:px-16 mx-auto max-w-[1600px]"
-            style={{
-                opacity,
-                pointerEvents,
-                transition: "opacity 0.1s ease-out",
-            }}
-        >
+        <section className="min-h-screen flex flex-col md:flex-row justify-between items-center px-8 md:px-16 mx-auto max-w-[1600px]">
             {/* Left Column */}
             <div className="w-full md:w-[42%] flex flex-col justify-center items-start text-left z-10 pt-20">
                 <h1 className="text-5xl md:text-6xl font-normal text-white mb-2 tracking-tight leading-tight">

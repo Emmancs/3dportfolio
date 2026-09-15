@@ -1,5 +1,4 @@
-import { useGLTF, Html } from "@react-three/drei";
-import ProjectShowcase from "./ProjectShowcase";
+import { useGLTF } from "@react-three/drei";
 
 export default function Laptop(props) {
     const { nodes } = useGLTF("/models/laptop.glb");
@@ -14,9 +13,7 @@ export default function Laptop(props) {
             
             <group position={nodes.Lid.position} rotation={nodes.Lid.rotation} scale={nodes.Lid.scale}>
                 <mesh geometry={nodes.Laptop_Display_Bezel.geometry} material={nodes.Laptop_Display_Bezel.material} position={nodes.Laptop_Display_Bezel.position} rotation={nodes.Laptop_Display_Bezel.rotation} scale={nodes.Laptop_Display_Bezel.scale} />
-                <mesh geometry={nodes.Laptop_Screen.geometry} material={nodes.Laptop_Screen.material} position={nodes.Laptop_Screen.position} rotation={nodes.Laptop_Screen.rotation} scale={nodes.Laptop_Screen.scale}>
-
-                </mesh>
+                <mesh name="Laptop_Screen" geometry={nodes.Laptop_Screen.geometry} material={nodes.Laptop_Screen.material} position={nodes.Laptop_Screen.position} rotation={nodes.Laptop_Screen.rotation} scale={nodes.Laptop_Screen.scale} />
             </group>
         </group>
     );
