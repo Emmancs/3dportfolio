@@ -16,7 +16,7 @@ export default function Scene() {
 
             <Environment preset="studio" />
 
-            <Laptop position={[2.0, -0.5, 0]} rotation={[0.1, -0.3, 0]} />
+            <Laptop position={[2.0, -0.5, 0]} rotation={[0.1, -0.3, 0]} scale={4.0} />
 
             <ScrollAnimation />
         </Canvas>

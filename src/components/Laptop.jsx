@@ -15,17 +15,7 @@ export default function Laptop(props) {
             <group position={nodes.Lid.position} rotation={nodes.Lid.rotation} scale={nodes.Lid.scale}>
                 <mesh geometry={nodes.Laptop_Display_Bezel.geometry} material={nodes.Laptop_Display_Bezel.material} position={nodes.Laptop_Display_Bezel.position} rotation={nodes.Laptop_Display_Bezel.rotation} scale={nodes.Laptop_Display_Bezel.scale} />
                 <mesh geometry={nodes.Laptop_Screen.geometry} material={nodes.Laptop_Screen.material} position={nodes.Laptop_Screen.position} rotation={nodes.Laptop_Screen.rotation} scale={nodes.Laptop_Screen.scale}>
-                    <Html
-                        transform
-                        occlude="blending" // use blending occlusion so it looks natural behind the bezel if it were to overflow, though it won't
-                        position={[0, -0.001, 0]} // Offset slightly in -Y (the direction it faces)
-                        rotation={[Math.PI / 2, 0, 0]} // Rotate to face -Y and upright
-                        scale={0.308 / 1024}
-                    >
-                        <div className="w-[1024px] h-[691px] overflow-hidden bg-[#050505]">
-                            <ProjectShowcase />
-                        </div>
-                    </Html>
+
                 </mesh>
             </group>
         </group>

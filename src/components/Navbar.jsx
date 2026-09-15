@@ -1,7 +1,7 @@
 export default function Navbar({ progress }) {
-    // Fade out navbar when scrolling
-    const opacity = Math.max(0, 1 - Math.max(0, (progress - 0.15) / 0.15));
-    const pointerEvents = progress < 0.2 ? "auto" : "none";
+    // Fade out when scrolling (0.25 to 0.40)
+    const opacity = Math.max(0, 1 - Math.max(0, (progress - 0.25) / 0.15));
+    const pointerEvents = progress < 0.4 ? "auto" : "none";
 
     return (
         <nav 

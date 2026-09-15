@@ -2,9 +2,9 @@
 
 export default function Hero({ progress }) {
 
-    // Fade out between 0.15 and 0.30
-    const opacity = Math.max(0, 1 - Math.max(0, (progress - 0.15) / 0.15));
-    const pointerEvents = progress < 0.30 ? "auto" : "none";
+    // Fade out between 0.25 and 0.40
+    const opacity = Math.max(0, 1 - Math.max(0, (progress - 0.25) / 0.15));
+    const pointerEvents = progress < 0.40 ? "auto" : "none";
 
     return (
         <section
@@ -36,18 +36,8 @@ export default function Hero({ progress }) {
                 </div>
             </div>
 
-            {/* Right Column - Presentation Frame */}
-            <div className="w-full md:w-[50%] h-[55vh] md:h-[65vh] relative mt-10 md:mt-0 flex flex-col items-center justify-center">
-                 {/* Frame Background */}
-                 <div className="absolute inset-0 bg-[#111111]/40 border border-white/[0.03] rounded-3xl shadow-[inset_0_0_30px_rgba(255,255,255,0.01)] pointer-events-none"></div>
-                 
-                 {/* Metadata */}
-                 <div className="absolute -bottom-8 left-2 text-[9px] tracking-[0.2em] text-gray-600 uppercase">
-                     Hardware Focus
-                 </div>
-                 <div className="absolute -bottom-8 right-2 text-[9px] tracking-[0.2em] text-gray-600 uppercase">
-                     Minimalist Setup // 2026
-                 </div>
+            {/* Right Column - Spacer for 3D Laptop */}
+            <div className="w-full md:w-[50%] h-[55vh] md:h-[65vh] relative mt-10 md:mt-0 flex flex-col items-center justify-center pointer-events-none">
             </div>
         </section>
     );
