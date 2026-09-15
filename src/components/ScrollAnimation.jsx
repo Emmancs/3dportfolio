@@ -66,31 +66,21 @@ export default function ScrollAnimation() {
         );
 
         /*
-          Find the direction from the screen
-          toward the ORIGINAL camera.
-    
-          This guarantees that we approach the
-          visible side of the laptop.
+          Find the screen's normal vector (local -Y axis according to the model structure)
         */
-
-        approachDirection.current
-            .subVectors(
-                initialCameraPosition.current,
-                screenPosition.current
-            )
-            .normalize();
+        const screenNormal = new THREE.Vector3(0, -1, 0);
+        screenNormal.transformDirection(screen.matrixWorld).normalize();
 
         /*
           Positions for the cinematic sequence:
           1. Viewport fill target (stops briefly to dominate the view)
-          2. Pass-through target (camera goes completely inside/through the screen)
         */
 
         const viewportFillDistance = 0.6; // Units in front of screen
 
         const viewportFillTarget = new THREE.Vector3()
             .copy(screenPosition.current)
-            .add(approachDirection.current.clone().multiplyScalar(viewportFillDistance));
+            .add(screenNormal.multiplyScalar(viewportFillDistance));
 
         /*
           Animation phases:

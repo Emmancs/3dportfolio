@@ -2,36 +2,52 @@
 
 export default function Hero({ progress }) {
 
-    // Fade out between 0.25 and 0.35
-    const opacity = Math.max(0, 1 - Math.max(0, (progress - 0.25) / 0.10));
-    const pointerEvents = progress < 0.35 ? "auto" : "none";
+    // Fade out between 0.15 and 0.30
+    const opacity = Math.max(0, 1 - Math.max(0, (progress - 0.15) / 0.15));
+    const pointerEvents = progress < 0.30 ? "auto" : "none";
 
     return (
         <section
-            className="min-h-screen flex flex-col justify-center items-center text-center px-4"
+            className="min-h-screen flex flex-col md:flex-row justify-between items-center px-8 md:px-16 mx-auto max-w-[1600px]"
             style={{
                 opacity,
                 pointerEvents,
                 transition: "opacity 0.1s ease-out",
             }}
         >
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-4">
-                EMMANUEL WINFRED
-            </h1>
-            <h2 className="text-xl md:text-2xl text-gray-400 mb-8 tracking-widest font-light">
-                FULL STACK DEVELOPER
-            </h2>
-            <p className="max-w-2xl text-gray-300 text-lg md:text-xl mb-12 font-light leading-relaxed">
-                Building interactive digital experiences,
-                full-stack applications, and creative web experiences.
-            </p>
-            <div className="flex gap-6">
-                <button className="px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-colors duration-300 tracking-wider text-sm">
-                    VIEW PROJECTS
-                </button>
-                <button className="px-8 py-3 border border-gray-600 text-gray-300 hover:border-gray-400 hover:text-white transition-colors duration-300 tracking-wider text-sm">
-                    GITHUB
-                </button>
+            {/* Left Column */}
+            <div className="w-full md:w-[42%] flex flex-col justify-center items-start text-left z-10 pt-20">
+                <h1 className="text-5xl md:text-6xl font-normal text-white mb-2 tracking-tight leading-tight">
+                    <span className="font-light text-gray-300 text-4xl md:text-5xl">Hello,</span><br />
+                    <strong className="font-medium">I'm Emmanuel</strong>
+                </h1>
+                
+                <p className="max-w-sm text-gray-400 text-sm md:text-base mt-6 mb-10 font-light leading-relaxed">
+                    Full Stack Developer crafting thoughtful digital experiences, interactive applications, and creative web platforms.
+                </p>
+                
+                <div className="flex gap-4">
+                    <button className="px-6 py-3 bg-white text-black text-xs font-medium rounded-full hover:bg-gray-200 transition-colors duration-300">
+                        Explore Projects &rarr;
+                    </button>
+                    <button className="px-6 py-3 border border-white/20 text-white text-xs font-medium rounded-full hover:bg-white/5 transition-colors duration-300">
+                        Let's Talk
+                    </button>
+                </div>
+            </div>
+
+            {/* Right Column - Presentation Frame */}
+            <div className="w-full md:w-[50%] h-[55vh] md:h-[65vh] relative mt-10 md:mt-0 flex flex-col items-center justify-center">
+                 {/* Frame Background */}
+                 <div className="absolute inset-0 bg-[#111111]/40 border border-white/[0.03] rounded-3xl shadow-[inset_0_0_30px_rgba(255,255,255,0.01)] pointer-events-none"></div>
+                 
+                 {/* Metadata */}
+                 <div className="absolute -bottom-8 left-2 text-[9px] tracking-[0.2em] text-gray-600 uppercase">
+                     Hardware Focus
+                 </div>
+                 <div className="absolute -bottom-8 right-2 text-[9px] tracking-[0.2em] text-gray-600 uppercase">
+                     Minimalist Setup // 2026
+                 </div>
             </div>
         </section>
     );
