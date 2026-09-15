@@ -87,44 +87,28 @@ export default function ScrollAnimation() {
         */
 
         const viewportFillDistance = 0.6; // Units in front of screen
-        const passThroughDistance = -0.5; // Units behind screen
 
         const viewportFillTarget = new THREE.Vector3()
             .copy(screenPosition.current)
             .add(approachDirection.current.clone().multiplyScalar(viewportFillDistance));
 
-        const passThroughTarget = new THREE.Vector3()
-            .copy(screenPosition.current)
-            .add(approachDirection.current.clone().multiplyScalar(passThroughDistance));
-
         /*
           Animation phases:
-          Phase 1 (0.30 - 0.70): Camera moves from start to viewportFillTarget
-          Phase 2 (0.70 - 0.90): Camera moves from viewportFillTarget to passThroughTarget
+          Phase 1 (0.00 - 0.35): Camera stays at start (handled by clamp).
+          Phase 2 (0.35 - 0.90): Camera moves from start to viewportFillTarget
+          Phase 3 (0.90 - 1.00): Camera stays at viewportFillTarget (handled by clamp).
         */
 
-        let phase1Progress = (progress - 0.3) / (0.7 - 0.3);
-        phase1Progress = THREE.MathUtils.clamp(phase1Progress, 0, 1);
-        phase1Progress = phase1Progress * phase1Progress * (3 - 2 * phase1Progress); // Smoothstep
+        let phaseProgress = (progress - 0.35) / (0.9 - 0.35);
+        phaseProgress = THREE.MathUtils.clamp(phaseProgress, 0, 1);
+        // Smoothstep for cinematic easing
+        phaseProgress = phaseProgress * phaseProgress * (3 - 2 * phaseProgress); 
 
-        let phase2Progress = (progress - 0.7) / (0.9 - 0.7);
-        phase2Progress = THREE.MathUtils.clamp(phase2Progress, 0, 1);
-        // phase2Progress = phase2Progress * phase2Progress * (3 - 2 * phase2Progress); // Smoothstep
-        phase2Progress = Math.pow(phase2Progress, 2); // Ease in for the final plunge
-
-        if (progress <= 0.7) {
-            camera.position.lerpVectors(
-                initialCameraPosition.current,
-                viewportFillTarget,
-                phase1Progress
-            );
-        } else {
-            camera.position.lerpVectors(
-                viewportFillTarget,
-                passThroughTarget,
-                phase2Progress
-            );
-        }
+        camera.position.lerpVectors(
+            initialCameraPosition.current,
+            viewportFillTarget,
+            phaseProgress
+        );
 
         /*
           Always look at the center of the screen.

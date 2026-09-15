@@ -2,9 +2,9 @@
 
 export default function Hero({ progress }) {
 
-    // Fade in between 0.85 and 1.0
-    const opacity = Math.max(0, Math.min(1, (progress - 0.85) / 0.15));
-    const pointerEvents = progress > 0.85 ? "auto" : "none";
+    // Fade out between 0.25 and 0.35
+    const opacity = Math.max(0, 1 - Math.max(0, (progress - 0.25) / 0.10));
+    const pointerEvents = progress < 0.35 ? "auto" : "none";
 
     return (
         <section
